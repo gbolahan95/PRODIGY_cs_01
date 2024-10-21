@@ -1,0 +1,41 @@
+def caesar_encrypt(text, shift):
+    encrypted_text = ""
+    shift = shift % 26  # Normalize shift to ensure it's within 0-25
+    for char in text:
+        if char.isalpha():
+            shift_base = ord('A') if char.isupper() else ord('a')
+            encrypted_char = chr((ord(char) - shift_base + shift) % 26 + shift_base)
+            encrypted_text += encrypted_char
+        else:
+            encrypted_text += char  # Non-alphabet characters remain unchanged
+    return encrypted_text
+
+def caesar_decrypt(text, shift):
+    return caesar_encrypt(text, -shift % 26)  # Decrypt by using the negative shift normalized
+
+def main():
+    print("Welcome to the Caesar Cipher Program!")
+
+    while True:
+        action = input("Would you like to (E)ncrypt or (D)ecrypt? (Q to quit): ").strip().upper()
+        
+        if action == 'Q':
+            print("Goodbye!")
+            break
+        
+        if action not in ('E', 'D'):
+            print("Invalid option. Please enter 'E', 'D', or 'Q'.")
+            continue
+
+        original_text = input("Enter the message: ")
+        shift_value = int(input("Enter the shift value: "))
+
+        if action == 'E':
+            encrypted = caesar_encrypt(original_text, shift_value)
+            print(f"Encrypted: {encrypted}")
+        elif action == 'D':
+            decrypted = caesar_decrypt(original_text, shift_value)
+            print(f"Decrypted: {decrypted}")
+
+if __name__ == "__main__":
+    main()
